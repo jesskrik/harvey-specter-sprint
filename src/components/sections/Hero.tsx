@@ -8,20 +8,14 @@ export default function Hero() {
       {/* ── Mobile background image — centred, fixed 847px height ── */}
       <ParallaxLayer y={120} scale={1.18}>
         <div
-          className="md:hidden absolute"
-          style={{
-            left: "60%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "139.47%",
-            height: "847px",
-            maxWidth: "none",
-          }}
+          className="md:hidden absolute inset-x-0"
+          style={{ top: -160, bottom: 0 }}
         >
           <img
             src="/images/hero.jpg"
             alt=""
-            className="size-full object-cover object-top"
+            className="size-full object-cover"
+            style={{ objectPosition: "60% top" }}
             fetchPriority="high"
           />
         </div>
@@ -30,22 +24,15 @@ export default function Hero() {
       {/* ── Desktop background image — proportional, centred ── */}
       <ParallaxLayer y={150} scale={1.18}>
         <div
-          className="hidden md:block absolute"
-          style={{
-            left: "60%",
-            top: "-14.24vw",
-            transform: "translateX(-50%)",
-            width: "169.58%",
-            aspectRatio: "2441.92 / 1434.67",
-            maxWidth: "none",
-          }}
+          className="hidden md:block absolute inset-x-0"
+          style={{ top: -200, bottom: 0 }}
         >
           <img
             src="/images/hero.jpg"
             alt=""
-            className="size-full object-cover object-top"
+            className="size-full object-cover"
+            style={{ objectPosition: "60% top" }}
             fetchPriority="high"
-            style={{ maxWidth: "none" }}
           />
         </div>
       </ParallaxLayer>
@@ -118,7 +105,7 @@ export default function Hero() {
                   design and art group specializing in branding, web design and engineering.
                 </p>
                 <Magnetic strength={0.4} className="w-fit">
-                  <button className="bg-black text-white text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] hover:bg-neutral-800 transition-colors">
+                  <button className="bg-black text-white border border-black text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] hover:bg-white hover:text-black transition-colors duration-300">
                     Let&apos;s talk
                   </button>
                 </Magnetic>
