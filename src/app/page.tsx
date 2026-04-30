@@ -1,3 +1,4 @@
+import Nav from "@/components/Nav";
 import Hero from "@/components/sections/Hero";
 import Intro from "@/components/sections/Intro";
 import About from "@/components/sections/About";
@@ -10,16 +11,19 @@ import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
-    <main>
-      <Hero />
-      <Intro />
-      <About />
-      <ImageBreak />
-      <Services />
-      <Work />
-      <Testimonials />
-      <News />
-      <Footer />
-    </main>
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <Intro />
+        <About />
+        <ImageBreak />
+        <Services />
+        <Work />
+        <Testimonials />
+        <News />
+        <Footer />
+      </main>
+    </>
   );
 }

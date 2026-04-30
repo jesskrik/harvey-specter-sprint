@@ -1,7 +1,4 @@
-import MobileNav from "@/components/MobileNav";
 import ParallaxLayer from "@/components/ParallaxLayer";
-
-const NAV_LINKS = ["About", "Services", "Projects", "News", "Contact"];
 
 export default function Hero() {
   return (
@@ -62,25 +59,7 @@ export default function Hero() {
       />
 
       {/* ── Layout shell — no z-index so blend modes reach the photo ── */}
-      <div className="relative h-full flex flex-col px-4 md:px-8">
-
-        {/* Nav — pinned to top on both breakpoints */}
-        <nav className="shrink-0 flex items-center justify-between h-[72px] md:h-[89px]">
-          <span className="font-semibold text-[16px] tracking-[-0.64px] capitalize text-black">
-            H.Studio
-          </span>
-          <div className="hidden md:flex gap-14 font-semibold text-[16px] tracking-[-0.64px] capitalize text-black">
-            {NAV_LINKS.map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} className="hover:opacity-60 transition-opacity">
-                {item}
-              </a>
-            ))}
-          </div>
-          <button className="hidden md:flex bg-black text-white text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] hover:bg-neutral-800 transition-colors">
-            Let&apos;s talk
-          </button>
-          <MobileNav />
-        </nav>
+      <div className="relative h-full flex flex-col px-4 md:px-8 pt-[72px] md:pt-[89px]">
 
         {/* Content wrapper
             Mobile:  flex-1 + justify-end  → content pinned to bottom
