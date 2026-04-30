@@ -58,7 +58,7 @@ export default function Hero() {
               and the headline + description stay readable longer as you scroll past.
               useTop animates `top` (not transform) so the headline's mix-blend-mode
               still resolves against the section's bg image. */}
-          <ParallaxLayer y={140} yMobile={0} useTop className="flex flex-col">
+          <ParallaxLayer y={140} yMobile={-60} useTop className="flex flex-col">
 
             {/* Label */}
             <div className="flex justify-center md:block px-[18px]">
@@ -92,8 +92,8 @@ export default function Hero() {
             </h1>
 
             {/* Description + CTA — 2rem below name on mobile, 1rem on desktop */}
-            <div className="mt-8 md:mt-4 flex justify-center md:justify-end">
-              <div className="w-[293px] md:w-[294px] flex flex-col gap-[17px]">
+            <div className="mt-8 md:mt-4 flex md:justify-end">
+              <div className="w-full md:w-[294px] flex flex-col gap-[17px]">
                 <p className="font-bold italic text-[14px] text-[#1f1f1f] tracking-[-0.56px] uppercase leading-[1.1]">
                   H.Studio is a{" "}
                   <span className="not-italic font-normal">full-service</span>{" "}
