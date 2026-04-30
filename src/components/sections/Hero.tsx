@@ -9,32 +9,53 @@ export default function Hero() {
       <ParallaxLayer
         y={120}
         scale={1.18}
-        className="md:hidden absolute inset-x-0"
-        style={{ top: -160, bottom: 0 }}
+        className="md:hidden absolute inset-0"
       >
-        <img
-          src="/images/hero.jpg"
-          alt=""
-          className="size-full object-cover"
-          style={{ objectPosition: "60% top" }}
-          fetchPriority="high"
-        />
+        <div
+          className="absolute"
+          style={{
+            left: "60%",
+            top: "60%",
+            transform: "translate(-50%, -50%)",
+            width: "139.47%",
+            height: "847px",
+            maxWidth: "none",
+          }}
+        >
+          <img
+            src="/images/hero.jpg"
+            alt=""
+            className="size-full object-cover object-top"
+            fetchPriority="high"
+          />
+        </div>
       </ParallaxLayer>
 
       {/* ── Desktop background image — proportional, centred ── */}
       <ParallaxLayer
         y={150}
         scale={1.18}
-        className="hidden md:block absolute inset-x-0"
-        style={{ top: -200, bottom: 0 }}
+        className="hidden md:block absolute inset-0"
       >
-        <img
-          src="/images/hero.jpg"
-          alt=""
-          className="size-full object-cover"
-          style={{ objectPosition: "60% top" }}
-          fetchPriority="high"
-        />
+        <div
+          className="absolute"
+          style={{
+            left: "60%",
+            top: "-9vw",
+            transform: "translateX(-50%)",
+            width: "169.58%",
+            aspectRatio: "2441.92 / 1434.67",
+            maxWidth: "none",
+          }}
+        >
+          <img
+            src="/images/hero.jpg"
+            alt=""
+            className="size-full object-cover object-top"
+            fetchPriority="high"
+            style={{ maxWidth: "none" }}
+          />
+        </div>
       </ParallaxLayer>
 
       {/* ── Frosted glass ── */}
