@@ -81,10 +81,8 @@ export default function Nav() {
         </div>
         <Magnetic strength={0.4} className="hidden md:block">
           <button
-            className={`text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] border transition-colors duration-300 ${
-              atTop
-                ? "bg-black text-white border-black hover:bg-white hover:text-black"
-                : "bg-white text-black border-white hover:bg-black hover:text-white"
+            className={`text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] transition-colors duration-300 hover:bg-[#d4a747] hover:text-black ${
+              atTop ? "bg-black text-white" : "bg-white text-black"
             }`}
           >
             Let&apos;s talk

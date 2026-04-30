@@ -13,7 +13,7 @@ function HaveAProject() {
 function LetsTalkOutlined() {
   return (
     <Magnetic strength={0.4} className="w-fit">
-      <button className="border border-white rounded-full px-4 py-3 text-[14px] font-medium tracking-[-0.04em] hover:bg-white hover:text-black transition-colors">
+      <button className="border border-white rounded-full px-4 py-3 text-[14px] font-medium tracking-[-0.04em] hover:bg-[#d4a747] hover:text-black hover:border-[#d4a747] transition-colors duration-300">
         Let&apos;s talk
       </button>
     </Magnetic>

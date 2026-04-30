@@ -103,7 +103,7 @@ export default function Hero() {
                   design and art group specializing in branding, web design and engineering.
                 </p>
                 <Magnetic strength={0.4} className="w-fit">
-                  <button className="bg-black text-white border border-black text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] hover:bg-white hover:text-black transition-colors duration-300">
+                  <button className="bg-black text-white text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] hover:bg-[#d4a747] hover:text-black transition-colors duration-300">
                     Let&apos;s talk
                   </button>
                 </Magnetic>

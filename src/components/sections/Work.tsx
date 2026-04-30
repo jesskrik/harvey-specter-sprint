@@ -93,7 +93,7 @@ function CTABox() {
           Discover how my creativity transforms ideas into impactful digital experiences — schedule a call with me to get started.
         </p>
         <Magnetic strength={0.4} className="w-fit">
-          <button className="bg-black text-white border border-black text-[14px] font-medium tracking-[-0.04em] px-4 py-3 rounded-[24px] hover:bg-white hover:text-black transition-colors duration-300">
+          <button className="bg-black text-white text-[14px] font-medium tracking-[-0.04em] px-4 py-3 rounded-[24px] hover:bg-[#d4a747] hover:text-black transition-colors duration-300">
             Let&apos;s talk
           </button>
         </Magnetic>
