@@ -20,7 +20,11 @@ export default function Nav() {
         const currentY = window.scrollY;
         const delta = currentY - lastY;
 
-        setAtTop(currentY < 50);
+        const scrollable = Math.max(
+          1,
+          document.documentElement.scrollHeight - window.innerHeight
+        );
+        setAtTop(currentY < scrollable * 0.1);
 
         if (Math.abs(delta) > 6) {
           setHidden(delta > 0 && currentY > 100);
@@ -32,12 +36,20 @@ export default function Nav() {
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
+
+  const motion = hidden
+    ? "transition-all duration-300 ease-in"
+    : "transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]";
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 px-4 md:px-8 transition-all duration-300 ease-out ${
+      className={`fixed top-0 left-0 right-0 z-50 px-4 md:px-8 ${motion} ${
         hidden ? "-translate-y-full" : "translate-y-0"
       } ${atTop ? "bg-transparent text-black" : "bg-black text-white"}`}
     >
@@ -57,7 +69,7 @@ export default function Nav() {
           ))}
         </div>
         <button
-          className={`hidden md:flex text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] transition-colors duration-300 ${
+          className={`hidden md:flex text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] transition-colors duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
             atTop
               ? "bg-black text-white hover:bg-neutral-800"
               : "bg-white text-black hover:bg-neutral-200"
