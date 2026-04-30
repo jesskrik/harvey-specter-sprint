@@ -1,4 +1,5 @@
 import { BracketSide } from "@/components/Brackets";
+import RevealImage from "@/components/RevealImage";
 import { client } from "@/sanity/client";
 import { urlFor } from "@/sanity/image";
 import { PROJECTS_QUERY } from "@/sanity/queries";
@@ -53,7 +54,7 @@ function ProjectCard({
 
   return (
     <div className="flex flex-col gap-[10px] w-full">
-      <div
+      <RevealImage
         className="relative w-full overflow-hidden flex items-end pb-4 pl-4"
         style={{ height: imageHeight }}
       >
@@ -68,7 +69,7 @@ function ProjectCard({
             <Tag key={tag} label={tag} />
           ))}
         </div>
-      </div>
+      </RevealImage>
       <div className="flex items-center justify-between">
         <h3
           className="font-black uppercase leading-[1.1] text-black"
