@@ -1,4 +1,5 @@
 import MobileNav from "@/components/MobileNav";
+import ParallaxLayer from "@/components/ParallaxLayer";
 
 const NAV_LINKS = ["About", "Services", "Projects", "News", "Contact"];
 
@@ -7,45 +8,49 @@ export default function Hero() {
     <section className="relative overflow-hidden bg-[#d8d5cf] h-[635px] md:min-h-[635px] md:h-[58.82vw]">
 
       {/* ── Mobile background image — centred, fixed 847px height ── */}
-      <div
-        className="md:hidden absolute"
-        style={{
-          left: "60%",
-          top: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "139.47%",
-          height: "847px",
-          maxWidth: "none",
-        }}
-      >
-        <img
-          src="/images/hero.jpg"
-          alt=""
-          className="size-full object-cover object-top"
-          fetchPriority="high"
-        />
-      </div>
+      <ParallaxLayer y={120}>
+        <div
+          className="md:hidden absolute"
+          style={{
+            left: "60%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "139.47%",
+            height: "847px",
+            maxWidth: "none",
+          }}
+        >
+          <img
+            src="/images/hero.jpg"
+            alt=""
+            className="size-full object-cover object-top"
+            fetchPriority="high"
+          />
+        </div>
+      </ParallaxLayer>
 
       {/* ── Desktop background image — proportional, centred ── */}
-      <div
-        className="hidden md:block absolute"
-        style={{
-          left: "60%",
-          top: "-14.24vw",
-          transform: "translateX(-50%)",
-          width: "169.58%",
-          aspectRatio: "2441.92 / 1434.67",
-          maxWidth: "none",
-        }}
-      >
-        <img
-          src="/images/hero.jpg"
-          alt=""
-          className="size-full object-cover object-top"
-          fetchPriority="high"
-          style={{ maxWidth: "none" }}
-        />
-      </div>
+      <ParallaxLayer y={150}>
+        <div
+          className="hidden md:block absolute"
+          style={{
+            left: "60%",
+            top: "-14.24vw",
+            transform: "translateX(-50%)",
+            width: "169.58%",
+            aspectRatio: "2441.92 / 1434.67",
+            maxWidth: "none",
+          }}
+        >
+          <img
+            src="/images/hero.jpg"
+            alt=""
+            className="size-full object-cover object-top"
+            fetchPriority="high"
+            style={{ maxWidth: "none" }}
+          />
+        </div>
+      </ParallaxLayer>
 
       {/* ── Frosted glass ── */}
       <div
