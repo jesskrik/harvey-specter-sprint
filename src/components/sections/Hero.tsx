@@ -8,7 +8,7 @@ export default function Hero() {
     <section className="relative overflow-hidden bg-[#d8d5cf] h-[635px] md:min-h-[635px] md:h-[58.82vw]">
 
       {/* ── Mobile background image — centred, fixed 847px height ── */}
-      <ParallaxLayer y={120}>
+      <ParallaxLayer y={120} scale={1.06}>
         <div
           className="md:hidden absolute"
           style={{
@@ -30,7 +30,7 @@ export default function Hero() {
       </ParallaxLayer>
 
       {/* ── Desktop background image — proportional, centred ── */}
-      <ParallaxLayer y={150}>
+      <ParallaxLayer y={150} scale={1.06}>
         <div
           className="hidden md:block absolute"
           style={{
@@ -100,28 +100,32 @@ export default function Hero() {
           </div>
 
           {/* Mobile name — two lines, fixed 96px */}
-          <h1
-            className="md:hidden font-medium text-white text-center capitalize w-full leading-[0.8]"
-            style={{ fontSize: "96px", letterSpacing: "-6.72px", mixBlendMode: "overlay" }}
-          >
-            Harvey<br />Specter
-          </h1>
+          <ParallaxLayer scale={1.06} opacity={0.4}>
+            <h1
+              className="md:hidden font-medium text-white text-center capitalize w-full leading-[0.8]"
+              style={{ fontSize: "96px", letterSpacing: "-6.72px", mixBlendMode: "overlay" }}
+            >
+              Harvey<br />Specter
+            </h1>
+          </ParallaxLayer>
 
           {/* Desktop name — fills container width exactly at any viewport */}
-          <h1
-            className="hidden md:block font-medium text-white text-center capitalize w-full leading-[1.1]"
-            style={{
-              fontSize: "clamp(80px, calc((100vw - 64px) / 6.95), 198px)",
-              letterSpacing: "-0.07em",
-              mixBlendMode: "overlay",
-              whiteSpace: "pre",
-            }}
-          >
-            {"Harvey   Specter"}
-          </h1>
+          <ParallaxLayer scale={1.06} opacity={0.4}>
+            <h1
+              className="hidden md:block font-medium text-white text-center capitalize w-full leading-[1.1]"
+              style={{
+                fontSize: "clamp(80px, calc((100vw - 64px) / 6.95), 198px)",
+                letterSpacing: "-0.07em",
+                mixBlendMode: "overlay",
+                whiteSpace: "pre",
+              }}
+            >
+              {"Harvey   Specter"}
+            </h1>
+          </ParallaxLayer>
 
           {/* Description + CTA — 2rem below name on mobile, 1rem on desktop */}
-          <div className="mt-8 md:mt-4 flex justify-center md:justify-end">
+          <ParallaxLayer y={-50} className="mt-8 md:mt-4 flex justify-center md:justify-end">
             <div className="w-[293px] md:w-[294px] flex flex-col gap-[17px]">
               <p className="font-bold italic text-[14px] text-[#1f1f1f] tracking-[-0.56px] uppercase leading-[1.1]">
                 H.Studio is a{" "}
@@ -135,7 +139,7 @@ export default function Hero() {
                 Let&apos;s talk
               </button>
             </div>
-          </div>
+          </ParallaxLayer>
         </div>
       </div>
     </section>

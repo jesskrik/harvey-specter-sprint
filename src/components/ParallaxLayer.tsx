@@ -11,21 +11,32 @@ type Props = {
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
-  /** Pixels to translate the layer across the trigger range. Positive = down (slower-than-scroll feel). */
+  /** Pixels to translate across the trigger range. Positive = down, negative = up. */
   y?: number;
+  /** Final scale at the end of the trigger range. */
+  scale?: number;
+  /** Final opacity at the end of the trigger range. */
+  opacity?: number;
 };
 
-export default function ParallaxLayer({ children, className, style, y = 120 }: Props) {
+export default function ParallaxLayer({
+  children,
+  className,
+  style,
+  y = 0,
+  scale,
+  opacity,
+}: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
       const wrapper = wrapperRef.current;
       if (!wrapper) return;
-      const trigger = wrapper.parentElement || wrapper;
+      const trigger =
+        wrapper.closest("section") || wrapper.parentElement || wrapper;
 
-      gsap.to(wrapper, {
-        y,
+      const vars: gsap.TweenVars = {
         ease: "none",
         scrollTrigger: {
           trigger,
@@ -33,7 +44,12 @@ export default function ParallaxLayer({ children, className, style, y = 120 }: P
           end: "bottom top",
           scrub: true,
         },
-      });
+      };
+      if (y) vars.y = y;
+      if (scale !== undefined) vars.scale = scale;
+      if (opacity !== undefined) vars.opacity = opacity;
+
+      gsap.to(wrapper, vars);
     },
     { scope: wrapperRef }
   );
