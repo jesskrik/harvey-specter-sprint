@@ -5,9 +5,15 @@ import MobileNav from "@/components/MobileNav";
 
 const NAV_LINKS = ["About", "Services", "Projects", "News", "Contact"];
 
+// Fade range — at FADE_START or below, nav is fully transparent;
+// at FADE_END or beyond, nav is fully dark; scroll position interpolates between.
+const FADE_START = 100;
+const FADE_END = 500;
+
 export default function Nav() {
   const [hidden, setHidden] = useState(false);
-  const [atTop, setAtTop] = useState(true);
+  // 1 = fully transparent + black text (at top). 0 = fully dark bg + white text.
+  const [transparency, setTransparency] = useState(1);
 
   useEffect(() => {
     let lastY = window.scrollY;
@@ -20,11 +26,11 @@ export default function Nav() {
         const currentY = window.scrollY;
         const delta = currentY - lastY;
 
-        const scrollable = Math.max(
-          1,
-          document.documentElement.scrollHeight - window.innerHeight
+        const t = Math.max(
+          0,
+          Math.min(1, (FADE_END - currentY) / (FADE_END - FADE_START))
         );
-        setAtTop(currentY < scrollable * 0.1);
+        setTransparency(t);
 
         if (Math.abs(delta) > 6) {
           setHidden(delta > 0 && currentY > 100);
@@ -36,22 +42,24 @@ export default function Nav() {
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const atTop = transparency > 0.5;
   const motion = hidden
-    ? "transition-all duration-300 ease-in"
-    : "transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]";
+    ? "transition-transform duration-300 ease-in"
+    : "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]";
+  const textChannel = Math.round(255 * (1 - transparency));
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 px-4 md:px-8 ${motion} ${
         hidden ? "-translate-y-full" : "translate-y-0"
-      } ${atTop ? "bg-transparent text-black" : "bg-black text-white"}`}
+      }`}
+      style={{
+        backgroundColor: `rgba(0, 0, 0, ${1 - transparency})`,
+        color: `rgb(${textChannel}, ${textChannel}, ${textChannel})`,
+      }}
     >
       <div className="flex items-center justify-between h-[72px] md:h-[89px]">
         <span className="font-semibold text-[16px] tracking-[-0.64px] capitalize">
