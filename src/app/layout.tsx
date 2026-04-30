@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable} ${geistMono.variable}`}>
       <body className="bg-white text-[#1f1f1f] font-[family-name:var(--font-inter)] overflow-x-hidden">
+        <SmoothScroll />
         {children}
       </body>
     </html>
