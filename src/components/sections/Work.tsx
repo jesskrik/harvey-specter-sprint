@@ -2,7 +2,7 @@ import { BracketSide } from "@/components/Brackets";
 import { client } from "@/sanity/client";
 import { urlFor } from "@/sanity/image";
 import { PROJECTS_QUERY } from "@/sanity/queries";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import type { SanityImageSource } from "@sanity/types";
 
 type Project = {
   _id: string;
