@@ -1,3 +1,5 @@
+import Magnetic from "@/components/Magnetic";
+
 function HaveAProject() {
   return (
     <p className="text-[24px] uppercase tracking-[-0.04em] leading-[1.1] w-[298px]">
@@ -10,9 +12,11 @@ function HaveAProject() {
 
 function LetsTalkOutlined() {
   return (
-    <button className="border border-white rounded-full px-4 py-3 text-[14px] font-medium tracking-[-0.04em] w-fit hover:bg-white hover:text-black transition-colors">
-      Let&apos;s talk
-    </button>
+    <Magnetic strength={0.4} className="w-fit">
+      <button className="border border-white rounded-full px-4 py-3 text-[14px] font-medium tracking-[-0.04em] hover:bg-white hover:text-black transition-colors">
+        Let&apos;s talk
+      </button>
+    </Magnetic>
   );
 }
 

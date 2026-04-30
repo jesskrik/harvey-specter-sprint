@@ -1,8 +1,9 @@
+import Magnetic from "@/components/Magnetic";
 import ParallaxLayer from "@/components/ParallaxLayer";
 
 export default function Hero() {
   return (
-    <section className="relative isolate overflow-hidden bg-[#d8d5cf] h-[635px] md:min-h-[635px] md:h-[58.82vw]">
+    <section className="relative isolate overflow-hidden bg-[#d8d5cf] h-[80vh] min-h-[635px]">
 
       {/* ── Mobile background image — centred, fixed 847px height ── */}
       <ParallaxLayer y={120} scale={1.18}>
@@ -116,9 +117,11 @@ export default function Hero() {
                   <span className="not-italic font-normal">award winning</span>{" "}
                   design and art group specializing in branding, web design and engineering.
                 </p>
-                <button className="bg-black text-white text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] w-fit hover:bg-neutral-800 transition-colors">
-                  Let&apos;s talk
-                </button>
+                <Magnetic strength={0.4} className="w-fit">
+                  <button className="bg-black text-white text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] hover:bg-neutral-800 transition-colors">
+                    Let&apos;s talk
+                  </button>
+                </Magnetic>
               </div>
             </div>
 

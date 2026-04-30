@@ -1,4 +1,5 @@
 import { BracketSide } from "@/components/Brackets";
+import Magnetic from "@/components/Magnetic";
 import RevealImage from "@/components/RevealImage";
 import { client } from "@/sanity/client";
 import { urlFor } from "@/sanity/image";
@@ -91,9 +92,11 @@ function CTABox() {
         <p className="italic text-[14px] tracking-[-0.04em] leading-[1.3]">
           Discover how my creativity transforms ideas into impactful digital experiences — schedule a call with me to get started.
         </p>
-        <button className="bg-black text-white text-[14px] font-medium tracking-[-0.04em] px-4 py-3 rounded-[24px] w-fit hover:bg-neutral-800 transition-colors">
-          Let&apos;s talk
-        </button>
+        <Magnetic strength={0.4} className="w-fit">
+          <button className="bg-black text-white text-[14px] font-medium tracking-[-0.04em] px-4 py-3 rounded-[24px] hover:bg-neutral-800 transition-colors">
+            Let&apos;s talk
+          </button>
+        </Magnetic>
       </div>
       <BracketSide side="right" />
     </div>

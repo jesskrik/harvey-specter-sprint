@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Magnetic from "@/components/Magnetic";
 import MobileNav from "@/components/MobileNav";
 
 const NAV_LINKS = ["About", "Services", "Projects", "News", "Contact"];
@@ -67,24 +68,28 @@ export default function Nav() {
         </span>
         <div className="hidden md:flex gap-14 font-semibold text-[16px] tracking-[-0.64px] capitalize">
           {NAV_LINKS.map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="hover:opacity-60 transition-opacity"
-            >
-              {item}
-            </a>
+            <Magnetic key={item} strength={0.25}>
+              <a
+                href={`#${item.toLowerCase()}`}
+                className="relative inline-block group py-1"
+              >
+                {item}
+                <span className="absolute left-0 -bottom-0.5 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-left group-hover:scale-x-100" />
+              </a>
+            </Magnetic>
           ))}
         </div>
-        <button
-          className={`hidden md:flex text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] transition-colors duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            atTop
-              ? "bg-black text-white hover:bg-neutral-800"
-              : "bg-white text-black hover:bg-neutral-200"
-          }`}
-        >
-          Let&apos;s talk
-        </button>
+        <Magnetic strength={0.4} className="hidden md:block">
+          <button
+            className={`text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] transition-colors duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              atTop
+                ? "bg-black text-white hover:bg-neutral-800"
+                : "bg-white text-black hover:bg-neutral-200"
+            }`}
+          >
+            Let&apos;s talk
+          </button>
+        </Magnetic>
         <MobileNav />
       </div>
     </nav>
