@@ -17,6 +17,10 @@ type Props = {
   scale?: number;
   /** Final opacity at the end of the trigger range. */
   opacity?: number;
+  /** Animate `top` instead of `transform: translateY`. Use when descendants need
+   *  mix-blend-mode — a transformed ancestor creates a new stacking context and
+   *  breaks the blend's backdrop. */
+  useTop?: boolean;
 };
 
 export default function ParallaxLayer({
@@ -26,6 +30,7 @@ export default function ParallaxLayer({
   y = 0,
   scale,
   opacity,
+  useTop = false,
 }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -45,17 +50,26 @@ export default function ParallaxLayer({
           scrub: true,
         },
       };
-      if (y) vars.y = y;
-      if (scale !== undefined) vars.scale = scale;
-      if (opacity !== undefined) vars.opacity = opacity;
+
+      if (useTop) {
+        if (y) vars.top = y;
+      } else {
+        if (y) vars.y = y;
+        if (scale !== undefined) vars.scale = scale;
+        if (opacity !== undefined) vars.opacity = opacity;
+      }
 
       gsap.to(wrapper, vars);
     },
     { scope: wrapperRef }
   );
 
+  const wrapperStyle: CSSProperties = useTop
+    ? { position: "relative", top: 0, ...style }
+    : style ?? {};
+
   return (
-    <div ref={wrapperRef} className={className} style={style}>
+    <div ref={wrapperRef} className={className} style={wrapperStyle}>
       {children}
     </div>
   );

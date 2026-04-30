@@ -2,7 +2,7 @@ import ParallaxLayer from "@/components/ParallaxLayer";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[#d8d5cf] h-[635px] md:min-h-[635px] md:h-[58.82vw]">
+    <section className="relative isolate overflow-hidden bg-[#d8d5cf] h-[635px] md:min-h-[635px] md:h-[58.82vw]">
 
       {/* ── Mobile background image — centred, fixed 847px height ── */}
       <ParallaxLayer y={120} scale={1.18}>
@@ -69,8 +69,10 @@ export default function Hero() {
         <div className="flex-1 flex flex-col justify-end md:justify-center pb-6 md:pb-0">
 
           {/* All foreground text translates DOWN together so spacing is preserved
-              and the headline + description stay readable longer as you scroll past. */}
-          <ParallaxLayer y={140} className="flex flex-col">
+              and the headline + description stay readable longer as you scroll past.
+              useTop animates `top` (not transform) so the headline's mix-blend-mode
+              still resolves against the section's bg image. */}
+          <ParallaxLayer y={140} useTop className="flex flex-col">
 
             {/* Label */}
             <div className="flex justify-center md:block px-[18px]">
