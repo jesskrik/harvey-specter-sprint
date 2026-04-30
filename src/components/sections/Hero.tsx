@@ -58,7 +58,7 @@ export default function Hero() {
               and the headline + description stay readable longer as you scroll past.
               useTop animates `top` (not transform) so the headline's mix-blend-mode
               still resolves against the section's bg image. */}
-          <ParallaxLayer y={140} useTop className="flex flex-col">
+          <ParallaxLayer y={140} yMobile={0} useTop className="flex flex-col">
 
             {/* Label */}
             <div className="flex justify-center md:block px-[18px]">

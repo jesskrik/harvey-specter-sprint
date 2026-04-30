@@ -13,6 +13,8 @@ type Props = {
   style?: CSSProperties;
   /** Pixels to translate across the trigger range. Positive = down, negative = up. */
   y?: number;
+  /** Override `y` on viewports < 768px. Use 0 to disable mobile parallax. */
+  yMobile?: number;
   /** Final scale at the end of the trigger range. */
   scale?: number;
   /** Final opacity at the end of the trigger range. */
@@ -28,6 +30,7 @@ export default function ParallaxLayer({
   className,
   style,
   y = 0,
+  yMobile,
   scale,
   opacity,
   useTop = false,
@@ -41,6 +44,11 @@ export default function ParallaxLayer({
       const trigger =
         wrapper.closest("section") || wrapper.parentElement || wrapper;
 
+      const isMobile =
+        typeof window !== "undefined" &&
+        window.matchMedia("(max-width: 767px)").matches;
+      const effectiveY = isMobile && yMobile !== undefined ? yMobile : y;
+
       const vars: gsap.TweenVars = {
         ease: "none",
         scrollTrigger: {
@@ -52,9 +60,9 @@ export default function ParallaxLayer({
       };
 
       if (useTop) {
-        if (y) vars.top = y;
+        if (effectiveY) vars.top = effectiveY;
       } else {
-        if (y) vars.y = y;
+        if (effectiveY) vars.y = effectiveY;
         if (scale !== undefined) vars.scale = scale;
         if (opacity !== undefined) vars.opacity = opacity;
       }
