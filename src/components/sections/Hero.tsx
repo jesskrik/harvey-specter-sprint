@@ -11,51 +11,28 @@ export default function Hero() {
         scale={1.18}
         className="md:hidden absolute inset-0"
       >
-        <div
-          className="absolute"
-          style={{
-            left: "60%",
-            top: "60%",
-            transform: "translate(-50%, -50%)",
-            width: "139.47%",
-            height: "847px",
-            maxWidth: "none",
-          }}
-        >
-          <img
-            src="/images/hero.jpg"
-            alt=""
-            className="size-full object-cover object-top"
-            fetchPriority="high"
-          />
-        </div>
+        <img
+          src="/images/hero.jpg"
+          alt=""
+          className="absolute inset-0 size-full object-cover"
+          style={{ objectPosition: "60% 25%" }}
+          fetchPriority="high"
+        />
       </ParallaxLayer>
 
-      {/* ── Desktop background image — proportional, centred ── */}
+      {/* ── Desktop background image — always fills section ── */}
       <ParallaxLayer
         y={150}
         scale={1.18}
         className="hidden md:block absolute inset-0"
       >
-        <div
-          className="absolute"
-          style={{
-            left: "60%",
-            top: "-9vw",
-            transform: "translateX(-50%)",
-            width: "169.58%",
-            aspectRatio: "2441.92 / 1434.67",
-            maxWidth: "none",
-          }}
-        >
-          <img
-            src="/images/hero.jpg"
-            alt=""
-            className="size-full object-cover object-top"
-            fetchPriority="high"
-            style={{ maxWidth: "none" }}
-          />
-        </div>
+        <img
+          src="/images/hero.jpg"
+          alt=""
+          className="absolute inset-0 size-full object-cover"
+          style={{ objectPosition: "60% 25%" }}
+          fetchPriority="high"
+        />
       </ParallaxLayer>
 
       {/* ── Frosted glass ── */}
