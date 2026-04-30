@@ -15,7 +15,7 @@ export default function Hero() {
           src="/images/hero.jpg"
           alt=""
           className="absolute inset-0 size-full object-cover"
-          style={{ objectPosition: "60% 25%" }}
+          style={{ objectPosition: "50% 25%" }}
           fetchPriority="high"
         />
       </ParallaxLayer>
@@ -30,7 +30,7 @@ export default function Hero() {
           src="/images/hero.jpg"
           alt=""
           className="absolute inset-0 size-full object-cover"
-          style={{ objectPosition: "60% 25%" }}
+          style={{ objectPosition: "50% 25%" }}
           fetchPriority="high"
         />
       </ParallaxLayer>
