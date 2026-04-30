@@ -45,14 +45,14 @@ export default function Hero() {
       />
 
       {/* ── Layout shell — no z-index so blend modes reach the photo ── */}
-      <div className="relative h-full flex flex-col px-4 md:px-8 pt-[72px] md:pt-[89px]">
+      <div className="relative h-full flex flex-col px-6 md:px-8 pt-[72px] md:pt-[89px]">
 
         {/* Content wrapper
             Mobile:  flex-1 + justify-end  → content pinned to bottom
             Desktop: flex-1 + justify-center → content centred in remaining height
                      so "Harvey Specter" sits at the vertical midpoint of the section
         */}
-        <div className="flex-1 flex flex-col justify-end md:justify-center pb-6 md:pb-0">
+        <div className="flex-1 flex flex-col justify-end md:justify-center pb-9 md:pb-0">
 
           {/* All foreground text translates DOWN together so spacing is preserved
               and the headline + description stay readable longer as you scroll past.
