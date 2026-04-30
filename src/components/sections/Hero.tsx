@@ -52,13 +52,13 @@ export default function Hero() {
             Desktop: flex-1 + justify-center → content centred in remaining height
                      so "Harvey Specter" sits at the vertical midpoint of the section
         */}
-        <div className="flex-1 flex flex-col justify-end md:justify-center pb-9 md:pb-0">
+        <div className="flex-1 flex flex-col justify-end md:justify-center pb-12 md:pb-0">
 
           {/* All foreground text translates DOWN together so spacing is preserved
               and the headline + description stay readable longer as you scroll past.
               useTop animates `top` (not transform) so the headline's mix-blend-mode
               still resolves against the section's bg image. */}
-          <ParallaxLayer y={140} yMobile={-60} useTop className="flex flex-col">
+          <ParallaxLayer y={140} yMobile={-100} useTop className="flex flex-col">
 
             {/* Label */}
             <div className="flex justify-center md:block px-[18px]">
@@ -93,7 +93,7 @@ export default function Hero() {
 
             {/* Description + CTA — 2rem below name on mobile, 1rem on desktop */}
             <div className="mt-8 md:mt-4 flex md:justify-end">
-              <div className="w-full md:w-[294px] flex flex-col gap-[17px]">
+              <div className="w-full px-6 md:w-[294px] md:px-0 flex flex-col gap-[17px]">
                 <p className="font-bold italic text-[14px] text-[#1f1f1f] tracking-[-0.56px] uppercase leading-[1.1]">
                   H.Studio is a{" "}
                   <span className="not-italic font-normal">full-service</span>{" "}
