@@ -6,35 +6,35 @@ export default function Hero() {
     <section className="relative isolate overflow-hidden bg-[#d8d5cf] h-[80vh] min-h-[635px]">
 
       {/* ── Mobile background image — centred, fixed 847px height ── */}
-      <ParallaxLayer y={120} scale={1.18}>
-        <div
-          className="md:hidden absolute inset-x-0"
-          style={{ top: -160, bottom: 0 }}
-        >
-          <img
-            src="/images/hero.jpg"
-            alt=""
-            className="size-full object-cover"
-            style={{ objectPosition: "60% top" }}
-            fetchPriority="high"
-          />
-        </div>
+      <ParallaxLayer
+        y={120}
+        scale={1.18}
+        className="md:hidden absolute inset-x-0"
+        style={{ top: -160, bottom: 0 }}
+      >
+        <img
+          src="/images/hero.jpg"
+          alt=""
+          className="size-full object-cover"
+          style={{ objectPosition: "60% top" }}
+          fetchPriority="high"
+        />
       </ParallaxLayer>
 
       {/* ── Desktop background image — proportional, centred ── */}
-      <ParallaxLayer y={150} scale={1.18}>
-        <div
-          className="hidden md:block absolute inset-x-0"
-          style={{ top: -200, bottom: 0 }}
-        >
-          <img
-            src="/images/hero.jpg"
-            alt=""
-            className="size-full object-cover"
-            style={{ objectPosition: "60% top" }}
-            fetchPriority="high"
-          />
-        </div>
+      <ParallaxLayer
+        y={150}
+        scale={1.18}
+        className="hidden md:block absolute inset-x-0"
+        style={{ top: -200, bottom: 0 }}
+      >
+        <img
+          src="/images/hero.jpg"
+          alt=""
+          className="size-full object-cover"
+          style={{ objectPosition: "60% top" }}
+          fetchPriority="high"
+        />
       </ParallaxLayer>
 
       {/* ── Frosted glass ── */}
