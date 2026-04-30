@@ -1,5 +1,5 @@
 import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+type SanityImageSource = { _type: "image"; asset: { _ref: string; _type: "reference" } };
 import { dataset, projectId } from "./env";
 
 const builder = imageUrlBuilder({ projectId, dataset });
