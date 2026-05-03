@@ -40,8 +40,35 @@ export function useCarouselAutoScroll({
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let intervalId: number | null = null;
+    let rafId: number | null = null;
     let inView = false;
     let pausedUntil = 0;
+
+    // Custom RAF-driven scroll with gentle easeInOut cubic — gives a
+    // consistent, slow glide regardless of browser-native smooth-scroll speed.
+    const animateScrollTo = (target: number, duration = 1400) => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+
+      const start = el.scrollLeft;
+      const distance = target - start;
+      if (Math.abs(distance) < 1) return;
+
+      const startTime = performance.now();
+      const easeInOutCubic = (t: number) =>
+        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+      const tick = (now: number) => {
+        const elapsed = now - startTime;
+        const t = Math.min(elapsed / duration, 1);
+        el.scrollLeft = start + distance * easeInOutCubic(t);
+        if (t < 1) {
+          rafId = requestAnimationFrame(tick);
+        } else {
+          rafId = null;
+        }
+      };
+      rafId = requestAnimationFrame(tick);
+    };
 
     const advance = () => {
       if (Date.now() < pausedUntil) return;
@@ -70,11 +97,14 @@ export function useCarouselAutoScroll({
       if (!nextCard) return;
 
       const cardCenter = nextCard.offsetLeft + nextCard.offsetWidth / 2;
-      const targetScroll = cardCenter - el.clientWidth / 2;
-      el.scrollTo({
-        left: Math.max(0, Math.min(targetScroll, el.scrollWidth - el.clientWidth)),
-        behavior: "smooth",
-      });
+      const targetScroll = Math.max(
+        0,
+        Math.min(
+          cardCenter - el.clientWidth / 2,
+          el.scrollWidth - el.clientWidth
+        )
+      );
+      animateScrollTo(targetScroll);
     };
 
     const startInterval = () => {
@@ -87,9 +117,14 @@ export function useCarouselAutoScroll({
         clearInterval(intervalId);
         intervalId = null;
       }
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
     };
 
-    // Run only while the carousel is in view.
+    // Run as soon as a sliver of the carousel enters the viewport — feels
+    // earlier than waiting for it to be substantially in view.
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -98,13 +133,17 @@ export function useCarouselAutoScroll({
           else stopInterval();
         }
       },
-      { threshold: 0.4 }
+      { threshold: 0, rootMargin: "0px 0px -10% 0px" }
     );
     observer.observe(el);
 
     // Pause auto-advance briefly when the user takes over.
     const handleInteraction = () => {
       pausedUntil = Date.now() + pauseMs;
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
     };
     el.addEventListener("touchstart", handleInteraction, { passive: true });
     el.addEventListener("pointerdown", handleInteraction, { passive: true });
