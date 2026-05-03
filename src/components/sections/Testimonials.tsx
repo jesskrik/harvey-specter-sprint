@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import CarouselDots from "@/components/CarouselDots";
+import { useCarouselAutoScroll } from "@/hooks/useCarouselAutoScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -89,6 +90,11 @@ function TestimonialCard({
 export default function Testimonials() {
   const sectionRef = useRef<HTMLElement>(null);
   const mobileScrollerRef = useRef<HTMLDivElement>(null);
+
+  useCarouselAutoScroll({
+    scrollerRef: mobileScrollerRef,
+    count: TESTIMONIALS.length,
+  });
 
   useGSAP(
     () => {
@@ -193,7 +199,7 @@ export default function Testimonials() {
         >
           Testimonials
         </h2>
-        <div ref={mobileScrollerRef} className="-mx-4 px-4 overflow-x-auto pb-4">
+        <div ref={mobileScrollerRef} className="-mx-4 px-4 overflow-x-auto pb-4 scrollbar-hide">
           <div className="flex gap-2 w-max items-center">
             {TESTIMONIALS.map((t) => (
               <div

@@ -13,3 +13,13 @@ body {
   background: white;
   color: #1f1f1f;
 }
+
+/* Hide native scrollbars on horizontally-scrolling carousels — the visible
+   scrollbar isn't needed because pagination dots indicate progress instead. */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

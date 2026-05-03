@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 import CarouselDots from "@/components/CarouselDots";
+import { useCarouselAutoScroll } from "@/hooks/useCarouselAutoScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -89,6 +90,11 @@ function NewsCard({
 export default function News() {
   const sectionRef = useRef<HTMLElement>(null);
   const mobileScrollerRef = useRef<HTMLDivElement>(null);
+
+  useCarouselAutoScroll({
+    scrollerRef: mobileScrollerRef,
+    count: NEWS_ITEMS.length,
+  });
 
   useGSAP(
     () => {
@@ -221,7 +227,7 @@ export default function News() {
         >
           Keep up with my<br />latest news &amp;<br />achievements
         </h2>
-        <div ref={mobileScrollerRef} className="-mx-4 px-4 overflow-x-auto pb-4">
+        <div ref={mobileScrollerRef} className="-mx-4 px-4 overflow-x-auto pb-4 scrollbar-hide">
           <div className="flex gap-4 w-max">
             {NEWS_ITEMS.map((item, i) => (
               <NewsCard key={i} item={item} width={300} />
