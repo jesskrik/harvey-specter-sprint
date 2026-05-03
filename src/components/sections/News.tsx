@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
+import CarouselDots from "@/components/CarouselDots";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -87,6 +88,7 @@ function NewsCard({
 
 export default function News() {
   const sectionRef = useRef<HTMLElement>(null);
+  const mobileScrollerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
@@ -219,13 +221,18 @@ export default function News() {
         >
           Keep up with my<br />latest news &amp;<br />achievements
         </h2>
-        <div className="-mx-4 px-4 overflow-x-auto pb-4">
+        <div ref={mobileScrollerRef} className="-mx-4 px-4 overflow-x-auto pb-4">
           <div className="flex gap-4 w-max">
             {NEWS_ITEMS.map((item, i) => (
               <NewsCard key={i} item={item} width={300} />
             ))}
           </div>
         </div>
+        <CarouselDots
+          scrollerRef={mobileScrollerRef}
+          count={NEWS_ITEMS.length}
+          className="mt-2"
+        />
       </div>
 
       {/* ── Desktop — rotated heading + 3 cards with vertical dividers ── */}
