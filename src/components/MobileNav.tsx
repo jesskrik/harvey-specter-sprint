@@ -85,7 +85,11 @@ export default function MobileNav() {
             {/* Bottom CTA */}
             <div className="shrink-0 pb-10">
               <Magnetic strength={0.4} className="w-fit">
-                <SlideButton variant="inverse" onClick={() => setOpen(false)}>
+                <SlideButton
+                  href="/contact"
+                  variant="inverse"
+                  onClick={() => setOpen(false)}
+                >
                   Let&apos;s talk
                 </SlideButton>
               </Magnetic>

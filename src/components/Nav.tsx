@@ -105,7 +105,10 @@ export default function Nav() {
           ))}
         </div>
         <Magnetic strength={0.4} className="hidden md:block">
-          <SlideButton variant={atTop && !darkHero ? "filled" : "inverse"}>
+          <SlideButton
+            href="/contact"
+            variant={atTop && !darkHero ? "filled" : "inverse"}
+          >
             Let&apos;s talk
           </SlideButton>
         </Magnetic>

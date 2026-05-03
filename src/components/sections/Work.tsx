@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BracketSide } from "@/components/Brackets";
 import Magnetic from "@/components/Magnetic";
 import Reveal from "@/components/Reveal";
@@ -11,6 +12,7 @@ type SanityImageSource = { _type: "image"; asset: { _ref: string; _type: "refere
 type Project = {
   _id: string;
   title: string;
+  slug: string | null;
   tags: string[] | null;
   image: SanityImageSource & { alt?: string };
 };
@@ -55,8 +57,8 @@ function ProjectCard({
   const imgSrc = urlFor(project.image).width(1200).quality(85).auto("format").url();
   const alt = project.image.alt ?? project.title;
 
-  return (
-    <div className="group flex flex-col gap-[10px] w-full cursor-pointer">
+  const cardBody = (
+    <>
       <RevealImage
         className="relative w-full overflow-hidden flex items-end pb-4 pl-4"
         style={{ height: imageHeight }}
@@ -88,7 +90,17 @@ function ProjectCard({
           <ArrowIcon />
         </span>
       </Reveal>
-    </div>
+    </>
+  );
+
+  const cardClass = "group flex flex-col gap-[10px] w-full";
+
+  return project.slug ? (
+    <Link href={`/projects/${project.slug}`} className={cardClass}>
+      {cardBody}
+    </Link>
+  ) : (
+    <div className={cardClass}>{cardBody}</div>
   );
 }
 
@@ -106,7 +118,7 @@ function CTABox() {
           Discover how my creativity transforms ideas into impactful digital experiences — schedule a call with me to get started.
         </p>
         <Magnetic strength={0.4} className="w-fit">
-          <SlideButton>Let&apos;s talk</SlideButton>
+          <SlideButton href="/contact">Let&apos;s talk</SlideButton>
         </Magnetic>
       </div>
       <BracketSide side="right" />

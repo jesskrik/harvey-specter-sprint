@@ -22,7 +22,7 @@ function HaveAProject() {
 function LetsTalkOutlined() {
   return (
     <Magnetic strength={0.4} className="w-fit">
-      <SlideButton variant="outlined">Let&apos;s talk</SlideButton>
+      <SlideButton href="/contact" variant="outlined">Let&apos;s talk</SlideButton>
     </Magnetic>
   );
 }

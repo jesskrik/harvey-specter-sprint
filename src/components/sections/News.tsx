@@ -4,6 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +24,7 @@ const NEWS_ITEMS: NewsItem[] = [
 
 function ReadMore() {
   return (
-    <button className="border-b border-black flex items-center gap-[10px] py-1 transition-opacity group-hover:opacity-70">
+    <span className="border-b border-black inline-flex items-center gap-[10px] py-1 transition-opacity group-hover:opacity-70">
       <span className="text-[14px] font-medium tracking-[-0.04em] text-black leading-none">
         Read more
       </span>
@@ -42,7 +43,7 @@ function ReadMore() {
           strokeLinejoin="miter"
         />
       </svg>
-    </button>
+    </span>
   );
 }
 
@@ -58,9 +59,10 @@ function NewsCard({
   width?: number;
 }) {
   return (
-    <div
+    <Link
+      href="/news"
       data-anim="card"
-      className={`group flex flex-col gap-4 items-start cursor-pointer ${className}`}
+      className={`group flex flex-col gap-4 items-start ${className}`}
       style={width ? { width: `${width}px` } : undefined}
     >
       <div
@@ -79,7 +81,7 @@ function NewsCard({
         {item.description}
       </p>
       <ReadMore />
-    </div>
+    </Link>
   );
 }
 

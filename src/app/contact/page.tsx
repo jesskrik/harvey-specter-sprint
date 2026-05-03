@@ -216,7 +216,7 @@ function ContactForm() {
 
       <div className="pt-2">
         <Magnetic strength={0.4} className="w-fit">
-          <SlideButton variant="filled">Send message</SlideButton>
+          <SlideButton type="submit" variant="filled">Send message</SlideButton>
         </Magnetic>
       </div>
     </form>

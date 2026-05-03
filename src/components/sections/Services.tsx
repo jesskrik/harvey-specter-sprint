@@ -4,6 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -139,10 +140,11 @@ export default function Services() {
       {/* Service list */}
       <div className="flex flex-col gap-8 md:gap-12 mt-8 md:mt-12">
         {SERVICES.map((s) => (
-          <article
+          <Link
             key={s.num}
+            href="/services"
             data-anim="row"
-            className="group w-full cursor-pointer"
+            className="group w-full block"
           >
 
             {/* Number + divider */}
@@ -196,7 +198,7 @@ export default function Services() {
               </div>
             </div>
 
-          </article>
+          </Link>
         ))}
       </div>
 

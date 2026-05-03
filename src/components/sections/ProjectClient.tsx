@@ -250,7 +250,7 @@ function InlineCTA() {
               </span>
             </h3>
             <Magnetic strength={0.4} className="w-fit shrink-0">
-              <SlideButton variant="filled">Let&apos;s talk</SlideButton>
+              <SlideButton href="/contact" variant="filled">Let&apos;s talk</SlideButton>
             </Magnetic>
           </div>
         </Reveal>
@@ -414,7 +414,7 @@ function ProjectCTA() {
           </Reveal>
           <Reveal from="up" distance={12} duration={0.7}>
             <Magnetic strength={0.4} className="w-fit">
-              <SlideButton variant="filled">Let&apos;s talk</SlideButton>
+              <SlideButton href="/contact" variant="filled">Let&apos;s talk</SlideButton>
             </Magnetic>
           </Reveal>
         </div>

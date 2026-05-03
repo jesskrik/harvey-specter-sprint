@@ -293,7 +293,7 @@ function ProjectsCTA() {
           </Reveal>
           <Reveal from="up" distance={12} duration={0.7}>
             <Magnetic strength={0.4} className="w-fit">
-              <SlideButton variant="inverse">Let&apos;s talk</SlideButton>
+              <SlideButton href="/contact" variant="inverse">Let&apos;s talk</SlideButton>
             </Magnetic>
           </Reveal>
         </div>

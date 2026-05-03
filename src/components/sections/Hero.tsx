@@ -172,7 +172,7 @@ export default function Hero() {
                 </p>
                 <div data-anim="hero-text">
                   <Magnetic strength={0.4} className="w-fit">
-                    <SlideButton>Let&apos;s talk</SlideButton>
+                    <SlideButton href="/contact">Let&apos;s talk</SlideButton>
                   </Magnetic>
                 </div>
               </div>
