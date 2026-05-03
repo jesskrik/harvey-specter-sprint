@@ -184,7 +184,7 @@ export default function Footer() {
           <hr data-anim="rule" className="border-t border-white w-full mt-2" />
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 items-start">
+        <div className="mt-12 flex flex-col gap-4 items-center">
           <div
             data-anim="fade"
             className="flex gap-[34px] pb-4 text-[12px] uppercase tracking-[-0.04em] leading-[1.1]"
