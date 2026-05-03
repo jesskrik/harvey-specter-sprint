@@ -1,6 +1,8 @@
 import { BracketSide } from "@/components/Brackets";
 import Magnetic from "@/components/Magnetic";
+import Reveal from "@/components/Reveal";
 import RevealImage from "@/components/RevealImage";
+import SlideButton from "@/components/SlideButton";
 import { client } from "@/sanity/client";
 import { urlFor } from "@/sanity/image";
 import { PROJECTS_QUERY } from "@/sanity/queries";
@@ -54,52 +56,61 @@ function ProjectCard({
   const alt = project.image.alt ?? project.title;
 
   return (
-    <div className="flex flex-col gap-[10px] w-full">
+    <div className="group flex flex-col gap-[10px] w-full cursor-pointer">
       <RevealImage
         className="relative w-full overflow-hidden flex items-end pb-4 pl-4"
         style={{ height: imageHeight }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imgSrc}
-          alt={alt}
-          className="absolute inset-0 size-full object-cover"
-        />
+        <div className="absolute inset-0 transition-transform duration-[800ms] ease-out group-hover:scale-[1.04]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imgSrc}
+            alt={alt}
+            className="absolute inset-0 size-full object-cover"
+          />
+        </div>
         <div className="relative flex gap-3 items-center">
           {project.tags?.map((tag) => (
             <Tag key={tag} label={tag} />
           ))}
         </div>
       </RevealImage>
-      <div className="flex items-center justify-between">
+      <Reveal from="up" distance={32} duration={0.8} className="flex items-center justify-between">
         <h3
           className="font-black uppercase leading-[1.1] text-black"
           style={{ fontSize: titleSize, letterSpacing: "-0.04em" }}
         >
-          {project.title}
+          <span className="relative inline-block transition-transform duration-300 ease-out group-hover:translate-x-2 pr-[0.05em] after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[0.05em] after:h-[0.06em] after:bg-current after:origin-left after:scale-x-0 after:transition-transform after:duration-300 after:ease-out group-hover:after:scale-x-100">
+            {project.title}
+          </span>
         </h3>
-        <ArrowIcon />
-      </div>
+        <span className="inline-flex transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:-translate-y-1">
+          <ArrowIcon />
+        </span>
+      </Reveal>
     </div>
   );
 }
 
 function CTABox() {
   return (
-    <div className="flex items-center gap-3 w-full md:w-[465px] text-[#1f1f1f]">
+    <Reveal
+      from="up"
+      distance={48}
+      duration={1}
+      className="flex items-center gap-3 w-full md:w-[465px] text-[#1f1f1f]"
+    >
       <BracketSide side="left" />
       <div className="flex-1 flex flex-col gap-[10px] py-3">
         <p className="italic text-[14px] tracking-[-0.04em] leading-[1.3]">
           Discover how my creativity transforms ideas into impactful digital experiences — schedule a call with me to get started.
         </p>
         <Magnetic strength={0.4} className="w-fit">
-          <button className="bg-black text-white text-[14px] font-medium tracking-[-0.04em] px-4 py-3 rounded-[24px] hover:bg-[#d4a747] hover:text-black transition-colors duration-300">
-            Let&apos;s talk
-          </button>
+          <SlideButton>Let&apos;s talk</SlideButton>
         </Magnetic>
       </div>
       <BracketSide side="right" />
-    </div>
+    </Reveal>
   );
 }
 
@@ -112,7 +123,7 @@ export default async function Work() {
     <section id="projects" className="bg-white py-12 md:py-20 px-4 md:px-8">
 
       {/* ── Mobile header ── */}
-      <div className="md:hidden flex flex-col gap-4 uppercase">
+      <Reveal from="up" distance={40} className="md:hidden flex flex-col gap-4 uppercase">
         <p className="font-[family-name:var(--font-geist-mono)] text-[14px] text-[#1f1f1f] leading-[1.1]">
           [ portfolio ]
         </p>
@@ -128,10 +139,10 @@ export default async function Work() {
             004
           </p>
         </div>
-      </div>
+      </Reveal>
 
       {/* ── Desktop header ── */}
-      <div className="hidden md:flex items-center justify-between uppercase">
+      <Reveal from="up" distance={48} className="hidden md:flex items-center justify-between uppercase">
         <div className="flex gap-[10px] items-start">
           <div
             className="font-light text-black"
@@ -151,7 +162,7 @@ export default async function Work() {
             [ portfolio ]
           </p>
         </div>
-      </div>
+      </Reveal>
 
       {/* ── Mobile — single stacked column ── */}
       <div className="md:hidden flex flex-col gap-6 mt-8">

@@ -14,6 +14,13 @@ export default function SmoothScroll() {
   useEffect(() => {
     if (pathname?.startsWith("/studio")) return;
 
+    // Reset scroll on route change so the new page lands at the top, unless
+    // the user navigated to a specific anchor (e.g. /#about) — in which case
+    // the browser will handle that scroll on its own.
+    if (typeof window !== "undefined" && !window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+
     const lenis = new Lenis({
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable} ${geistMono.variable}`}>
-      <body className="bg-white text-[#1f1f1f] font-[family-name:var(--font-inter)] overflow-x-hidden">
+      <body className="bg-white text-[#1f1f1f] font-[family-name:var(--font-inter)]">
         <SmoothScroll />
         {children}
       </body>

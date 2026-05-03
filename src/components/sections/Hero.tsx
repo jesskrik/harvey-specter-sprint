@@ -1,9 +1,61 @@
+"use client";
+
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import Magnetic from "@/components/Magnetic";
 import ParallaxLayer from "@/components/ParallaxLayer";
+import SlideButton from "@/components/SlideButton";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const root = sectionRef.current;
+      if (!root) return;
+
+      const items = root.querySelectorAll<HTMLElement>("[data-anim='hero-text']");
+      if (items.length) {
+        gsap.from(items, {
+          y: 12,
+          duration: 0.7,
+          ease: "power3.out",
+          stagger: 0.08,
+          delay: 0.1,
+        });
+      }
+
+      // Desktop only: split the headline so "Harvey" drifts left and
+      // "Specter" drifts right as the section scrolls. Animate `left`
+      // (not transform) so the parent h1's mix-blend-mode keeps working.
+      const isDesktop =
+        typeof window !== "undefined" &&
+        window.matchMedia("(min-width: 768px)").matches;
+      const harvey = root.querySelector<HTMLElement>("[data-split='harvey']");
+      const specter = root.querySelector<HTMLElement>("[data-split='specter']");
+      if (isDesktop && harvey && specter) {
+        const st = {
+          trigger: root,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        };
+        gsap.to(harvey, { left: -150, ease: "none", scrollTrigger: st });
+        gsap.to(specter, { left: 150, ease: "none", scrollTrigger: st });
+      }
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section className="relative isolate overflow-hidden bg-[#d8d5cf] h-[80vh] min-h-[635px]">
+    <section
+      ref={sectionRef}
+      className="relative isolate overflow-hidden bg-[#d8d5cf] h-screen min-h-[635px]"
+    >
 
       {/* ── Mobile background image — centred, fixed 847px height ── */}
       <ParallaxLayer
@@ -58,11 +110,12 @@ export default function Hero() {
               and the headline + description stay readable longer as you scroll past.
               useTop animates `top` (not transform) so the headline's mix-blend-mode
               still resolves against the section's bg image. */}
-          <ParallaxLayer y={140} yMobile={-200} useTop className="flex flex-col">
+          <ParallaxLayer y={140} yMobile={-100} useTop className="flex flex-col">
 
             {/* Label */}
             <div className="flex justify-center md:block px-[18px]">
               <p
+                data-anim="hero-text"
                 className="font-[family-name:var(--font-geist-mono)] text-[14px] text-white uppercase leading-[1.1]"
                 style={{ mixBlendMode: "overlay" }}
               >
@@ -70,7 +123,8 @@ export default function Hero() {
               </p>
             </div>
 
-            {/* Mobile name — two lines, fixed 96px */}
+            {/* Headline — intentionally NOT animated. A transform would create a new
+                stacking context and break the mix-blend-mode against the photo. */}
             <h1
               className="md:hidden font-medium text-white text-center capitalize w-full leading-[0.8]"
               style={{ fontSize: "96px", letterSpacing: "-6.72px", mixBlendMode: "overlay" }}
@@ -78,7 +132,6 @@ export default function Hero() {
               Harvey<br />Specter
             </h1>
 
-            {/* Desktop name — fills container width exactly at any viewport */}
             <h1
               className="hidden md:block font-medium text-white text-center capitalize w-full leading-[1.1]"
               style={{
@@ -88,13 +141,28 @@ export default function Hero() {
                 whiteSpace: "pre",
               }}
             >
-              {"Harvey   Specter"}
+              <span
+                data-split="harvey"
+                style={{ position: "relative", display: "inline-block", left: 0 }}
+              >
+                Harvey
+              </span>
+              {"   "}
+              <span
+                data-split="specter"
+                style={{ position: "relative", display: "inline-block", left: 0 }}
+              >
+                Specter
+              </span>
             </h1>
 
             {/* Description + CTA — 2rem below name on mobile, 1rem on desktop */}
             <div className="mt-8 md:mt-4 flex md:justify-end">
               <div className="w-full px-6 md:w-[294px] md:px-0 flex flex-col gap-[17px]">
-                <p className="font-bold italic text-[14px] text-[#1f1f1f] tracking-[-0.56px] uppercase leading-[1.1]">
+                <p
+                  data-anim="hero-text"
+                  className="font-bold italic text-[14px] text-[#1f1f1f] tracking-[-0.56px] uppercase leading-[1.1]"
+                >
                   H.Studio is a{" "}
                   <span className="not-italic font-normal">full-service</span>{" "}
                   creative studio creating beautiful digital experiences and products.
@@ -102,11 +170,11 @@ export default function Hero() {
                   <span className="not-italic font-normal">award winning</span>{" "}
                   design and art group specializing in branding, web design and engineering.
                 </p>
-                <Magnetic strength={0.4} className="w-fit">
-                  <button className="bg-black text-white text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] hover:bg-[#d4a747] hover:text-black transition-colors duration-300">
-                    Let&apos;s talk
-                  </button>
-                </Magnetic>
+                <div data-anim="hero-text">
+                  <Magnetic strength={0.4} className="w-fit">
+                    <SlideButton>Let&apos;s talk</SlideButton>
+                  </Magnetic>
+                </div>
               </div>
             </div>
 

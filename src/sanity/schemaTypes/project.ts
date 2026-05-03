@@ -35,6 +35,12 @@ export const project = defineType({
       validation: (rule) => rule.min(1),
     }),
     defineField({
+      name: "description",
+      type: "text",
+      rows: 4,
+      description: "Short blurb shown under the image on /projects.",
+    }),
+    defineField({
       name: "displayOrder",
       title: "Display order",
       type: "number",

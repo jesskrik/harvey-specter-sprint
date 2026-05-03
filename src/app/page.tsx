@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <main>
+      <main className="relative md:z-10 bg-white overflow-x-hidden">
         <Hero />
         <Intro />
         <About />
@@ -22,8 +22,8 @@ export default function Home() {
         <Work />
         <Testimonials />
         <News />
-        <Footer />
       </main>
+      <Footer />
     </>
   );
 }

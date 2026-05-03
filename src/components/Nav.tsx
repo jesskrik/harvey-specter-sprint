@@ -1,10 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Magnetic from "@/components/Magnetic";
 import MobileNav from "@/components/MobileNav";
+import SlideButton from "@/components/SlideButton";
 
-const NAV_LINKS = ["About", "Services", "Projects", "News", "Contact"];
+// Anchor links use the `/#section` form so they navigate (and scroll)
+// correctly from any route, not just the home page.
+const NAV_LINKS: { label: string; href: string }[] = [
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects" },
+  { label: "News", href: "/news" },
+  { label: "Contact", href: "/contact" },
+];
 
 // Fade range — at FADE_START or below, nav is fully transparent;
 // at FADE_END or beyond, nav is fully dark; scroll position interpolates between.
@@ -12,6 +23,19 @@ const FADE_START = 100;
 const FADE_END = 500;
 
 export default function Nav() {
+  const pathname = usePathname();
+  // Routes whose hero is dark — nav text needs to stay white at the top
+  // of the page, otherwise black text disappears against the photo.
+  // Match individual project / news pages (which have dark photo heros) but
+  // NOT the /projects or /news list pages (which are light-themed). The
+  // trailing slash forces sub-route match.
+  const darkHero =
+    pathname?.startsWith("/services") ||
+    pathname?.startsWith("/about") ||
+    pathname?.startsWith("/projects/") ||
+    pathname?.startsWith("/news/") ||
+    false;
+
   const [hidden, setHidden] = useState(false);
   // 1 = fully transparent + black text (at top). 0 = fully dark bg + white text.
   const [transparency, setTransparency] = useState(1);
@@ -50,7 +74,8 @@ export default function Nav() {
   const motion = hidden
     ? "transition-transform duration-300 ease-in"
     : "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]";
-  const textChannel = Math.round(255 * (1 - transparency));
+  // Force white text on dark-hero routes; otherwise interpolate black → white as nav darkens.
+  const textChannel = darkHero ? 255 : Math.round(255 * (1 - transparency));
 
   return (
     <nav
@@ -63,30 +88,26 @@ export default function Nav() {
       }}
     >
       <div className="flex items-center justify-between h-[72px] md:h-[89px]">
-        <span className="font-semibold text-[16px] tracking-[-0.64px] capitalize">
+        <Link href="/" className="font-semibold text-[16px] tracking-[-0.64px] capitalize">
           H.Studio
-        </span>
+        </Link>
         <div className="hidden md:flex gap-14 font-semibold text-[16px] tracking-[-0.64px] capitalize">
-          {NAV_LINKS.map((item) => (
-            <Magnetic key={item} strength={0.25}>
-              <a
-                href={`#${item.toLowerCase()}`}
+          {NAV_LINKS.map(({ label, href }) => (
+            <Magnetic key={label} strength={0.25}>
+              <Link
+                href={href}
                 className="relative inline-block group py-1"
               >
-                {item}
+                {label}
                 <span className="absolute left-0 -bottom-0.5 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-left group-hover:scale-x-100" />
-              </a>
+              </Link>
             </Magnetic>
           ))}
         </div>
         <Magnetic strength={0.4} className="hidden md:block">
-          <button
-            className={`text-[14px] font-medium tracking-[-0.56px] px-4 py-3 rounded-[24px] transition-colors duration-300 hover:bg-[#d4a747] hover:text-black ${
-              atTop ? "bg-black text-white" : "bg-white text-black"
-            }`}
-          >
+          <SlideButton variant={atTop && !darkHero ? "filled" : "inverse"}>
             Let&apos;s talk
-          </button>
+          </SlideButton>
         </Magnetic>
         <MobileNav />
       </div>

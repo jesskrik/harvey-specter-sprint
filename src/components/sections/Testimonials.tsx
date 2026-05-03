@@ -1,3 +1,12 @@
+"use client";
+
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
+
 type Testimonial = {
   quote: string;
   author: string;
@@ -77,12 +86,102 @@ function TestimonialCard({
 }
 
 export default function Testimonials() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const root = sectionRef.current;
+      if (!root) return;
+
+      const desktopHeadline = root.querySelector<HTMLElement>(
+        "[data-anim='headline-desktop']"
+      );
+      const mobileHeadline = root.querySelector<HTMLElement>(
+        "[data-anim='headline-mobile']"
+      );
+      const desktopCards = root.querySelectorAll<HTMLElement>(
+        "[data-anim='card-desktop']"
+      );
+      const mobileCards = root.querySelectorAll<HTMLElement>(
+        "[data-anim='card-mobile']"
+      );
+
+      // ── Mobile: simple stagger fade-up ──
+      if (mobileHeadline) {
+        gsap.from(mobileHeadline, {
+          scale: 0.9,
+          opacity: 0,
+          y: 40,
+          duration: 1.1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: mobileHeadline, start: "top 85%", toggleActions: "play none none none" },
+        });
+      }
+      if (mobileCards.length) {
+        gsap.from(mobileCards, {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.1,
+          scrollTrigger: { trigger: root, start: "top 80%", toggleActions: "play none none none" },
+        });
+      }
+
+      // ── Desktop: scrub parallax — cards drift on scroll up & down ──
+      // Per-card depth so the scattered layout reads as layered. All ≥ 160 so
+      // every card is visibly parallaxed.
+      const depths = [240, 180, 200, 220];
+
+      desktopCards.forEach((card, i) => {
+        const depth = depths[i % depths.length];
+        gsap.fromTo(
+          card,
+          { y: depth },
+          {
+            y: -depth,
+            ease: "none",
+            scrollTrigger: {
+              trigger: root,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          }
+        );
+      });
+
+      if (desktopHeadline) {
+        gsap.fromTo(
+          desktopHeadline,
+          { y: 80 },
+          {
+            y: -80,
+            ease: "none",
+            scrollTrigger: {
+              trigger: root,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          }
+        );
+      }
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section id="testimonials" className="bg-white overflow-hidden">
+    <section
+      ref={sectionRef}
+      id="testimonials"
+      className="bg-white overflow-hidden"
+    >
 
       {/* ── Mobile — heading + horizontal-scroll cards ── */}
       <div className="md:hidden py-16 px-4 flex flex-col gap-8">
         <h2
+          data-anim="headline-mobile"
           className="font-medium text-center capitalize text-black"
           style={{
             fontSize: "64px",
@@ -97,6 +196,7 @@ export default function Testimonials() {
             {TESTIMONIALS.map((t) => (
               <div
                 key={t.author}
+                data-anim="card-mobile"
                 className="shrink-0"
                 style={{ transform: `rotate(${t.mobileRotate}deg)` }}
               >
@@ -112,6 +212,7 @@ export default function Testimonials() {
         {/* Headline centred */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <h2
+            data-anim="headline-desktop"
             className="font-medium capitalize text-black whitespace-nowrap"
             style={{
               fontSize: "clamp(96px, 13.75vw, 198px)",
@@ -127,6 +228,7 @@ export default function Testimonials() {
         {TESTIMONIALS.map((t) => (
           <div
             key={t.author}
+            data-anim="card-desktop"
             className="absolute"
             style={{
               left: `${(t.x / 1440) * 100}vw`,

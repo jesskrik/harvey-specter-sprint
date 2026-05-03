@@ -2,8 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
+import Magnetic from "@/components/Magnetic";
+import SlideButton from "@/components/SlideButton";
 
-const NAV_LINKS = ["About", "Services", "Projects", "News", "Contact"];
+const NAV_LINKS: { label: string; href: string }[] = [
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects" },
+  { label: "News", href: "/news" },
+  { label: "Contact", href: "/contact" },
+];
 
 export default function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -37,9 +46,13 @@ export default function MobileNav() {
           >
             {/* Top row */}
             <div className="flex items-center justify-between h-[72px] shrink-0">
-              <span className="font-semibold text-[16px] tracking-[-0.64px] capitalize text-white">
+              <Link
+                href="/"
+                onClick={() => setOpen(false)}
+                className="font-semibold text-[16px] tracking-[-0.64px] capitalize text-white"
+              >
                 H.Studio
-              </span>
+              </Link>
               <button
                 onClick={() => setOpen(false)}
                 className="flex items-center justify-center"
@@ -53,10 +66,10 @@ export default function MobileNav() {
 
             {/* Nav links */}
             <nav className="flex-1 flex flex-col justify-center gap-2">
-              {NAV_LINKS.map((item, i) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
+              {NAV_LINKS.map(({ label, href }, i) => (
+                <Link
+                  key={label}
+                  href={href}
                   onClick={() => setOpen(false)}
                   className="font-medium text-white capitalize leading-none py-3 border-b border-white/10 hover:opacity-60 transition-opacity"
                   style={{ fontSize: "clamp(36px, 11vw, 56px)", letterSpacing: "-0.03em" }}
@@ -64,19 +77,18 @@ export default function MobileNav() {
                   <span className="text-white/30 text-[14px] font-mono mr-3 tracking-normal">
                     0{i + 1}
                   </span>
-                  {item}
-                </a>
+                  {label}
+                </Link>
               ))}
             </nav>
 
             {/* Bottom CTA */}
             <div className="shrink-0 pb-10">
-              <button
-                className="bg-white text-black text-[14px] font-medium tracking-[-0.56px] px-6 py-3 rounded-[24px] hover:bg-[#d4a747] hover:text-black transition-colors duration-300"
-                onClick={() => setOpen(false)}
-              >
-                Let&apos;s talk
-              </button>
+              <Magnetic strength={0.4} className="w-fit">
+                <SlideButton variant="inverse" onClick={() => setOpen(false)}>
+                  Let&apos;s talk
+                </SlideButton>
+              </Magnetic>
             </div>
           </div>,
           document.body
