@@ -4,10 +4,19 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import Link from "next/link";
 import Magnetic from "@/components/Magnetic";
 import SlideButton from "@/components/SlideButton";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const NAV_LINKS: { label: string; href: string }[] = [
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects" },
+  { label: "News", href: "/news" },
+  { label: "Contact", href: "/contact" },
+];
 
 function HaveAProject() {
   return (
@@ -43,8 +52,7 @@ function StudioBig({ size }: { size: string }) {
   );
 }
 
-const SOCIALS_LEFT = ["Facebook", "Instagram"];
-const SOCIALS_RIGHT = ["x.com", "Linkedin"];
+const SOCIALS = ["Facebook", "Instagram", "x.com", "Linkedin"];
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
@@ -128,26 +136,55 @@ export default function Footer() {
 
       {/* ── Mobile ── */}
       <div className="md:hidden pt-12 px-4">
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-8">
           <div data-anim="fade" className="flex flex-col gap-3">
             <HaveAProject />
             <LetsTalkOutlined />
           </div>
-          <ul className="flex flex-col gap-3">
-            {[...SOCIALS_LEFT, ...SOCIALS_RIGHT].map((name) => (
-              <li
-                key={name}
-                data-anim="fade"
-                className="text-[18px] uppercase tracking-[-0.04em] leading-[1.1]"
-              >
-                {name}
-              </li>
-            ))}
-          </ul>
+
+          <div className="grid grid-cols-2 gap-6">
+            <div data-anim="fade" className="flex flex-col gap-3">
+              <p className="font-[family-name:var(--font-geist-mono)] text-[12px] uppercase tracking-[-0.04em] leading-[1.1] text-white/60">
+                [ navigation ]
+              </p>
+              <ul className="flex flex-col gap-3">
+                {NAV_LINKS.map(({ label, href }) => (
+                  <li
+                    key={label}
+                    className="text-[18px] uppercase tracking-[-0.04em] leading-[1.1]"
+                  >
+                    <Link
+                      href={href}
+                      className="transition-opacity hover:opacity-70"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div data-anim="fade" className="flex flex-col gap-3">
+              <p className="font-[family-name:var(--font-geist-mono)] text-[12px] uppercase tracking-[-0.04em] leading-[1.1] text-white/60">
+                [ connect ]
+              </p>
+              <ul className="flex flex-col gap-3">
+                {SOCIALS.map((name) => (
+                  <li
+                    key={name}
+                    className="text-[18px] uppercase tracking-[-0.04em] leading-[1.1]"
+                  >
+                    {name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
           <hr data-anim="rule" className="border-t border-white w-full mt-2" />
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 items-center">
+        <div className="mt-12 flex flex-col gap-4 items-start">
           <div
             data-anim="fade"
             className="flex gap-[34px] pb-4 text-[12px] uppercase tracking-[-0.04em] leading-[1.1]"
@@ -172,29 +209,36 @@ export default function Footer() {
       {/* ── Desktop ── */}
       <div className="hidden md:flex flex-col pt-12 px-8 gap-[120px]">
 
-        {/* TOP — CTA + socials + divider */}
+        {/* TOP — CTA + nav + socials + divider */}
         <div className="flex flex-col gap-12">
           <div className="flex items-start justify-between gap-8">
             <div data-anim="fade" className="flex flex-col gap-3 w-[298px]">
               <HaveAProject />
               <LetsTalkOutlined />
             </div>
-            <div
+            <ul
               data-anim="fade"
-              className="w-[298px] text-center text-[18px] uppercase tracking-[-0.04em] leading-[1.1]"
+              className="w-[298px] text-left flex flex-col gap-2 text-[18px] uppercase tracking-[-0.04em] leading-[1.1]"
             >
-              {SOCIALS_LEFT.map((name) => (
-                <p key={name}>{name}</p>
+              {NAV_LINKS.map(({ label, href }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="inline-block transition-opacity hover:opacity-70"
+                  >
+                    {label}
+                  </Link>
+                </li>
               ))}
-            </div>
-            <div
+            </ul>
+            <ul
               data-anim="fade"
-              className="w-[298px] text-right text-[18px] uppercase tracking-[-0.04em] leading-[1.1]"
+              className="w-[298px] text-right flex flex-col gap-2 text-[18px] uppercase tracking-[-0.04em] leading-[1.1]"
             >
-              {SOCIALS_RIGHT.map((name) => (
-                <p key={name}>{name}</p>
+              {SOCIALS.map((name) => (
+                <li key={name}>{name}</li>
               ))}
-            </div>
+            </ul>
           </div>
           <hr data-anim="rule" className="border-t border-white w-full" />
         </div>
