@@ -1,17 +1,15 @@
 import { BracketSide } from "@/components/Brackets";
+import { client } from "@/sanity/client";
+import { urlFor } from "@/sanity/image";
+import { PROJECTS_QUERY } from "@/sanity/queries";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 type Project = {
+  _id: string;
   title: string;
-  tags: string[];
-  img: string;
+  tags: string[] | null;
+  image: SanityImageSource & { alt?: string };
 };
-
-const PROJECTS: Project[] = [
-  { title: "Surfers paradise", tags: ["Social Media", "Photography"], img: "/images/work-1.png" },
-  { title: "Cyberpunk caffe", tags: ["Social Media", "Photography"], img: "/images/work-2.png" },
-  { title: "Agency 976", tags: ["Social Media", "Photography"], img: "/images/work-3.png" },
-  { title: "Minimal Playground", tags: ["Social Media", "Photography"], img: "/images/work-4.png" },
-];
 
 function ArrowIcon({ size = 32 }: { size?: number }) {
   return (
@@ -50,19 +48,23 @@ function ProjectCard({
   imageHeight: string;
   titleSize: string;
 }) {
+  const imgSrc = urlFor(project.image).width(1200).quality(85).auto("format").url();
+  const alt = project.image.alt ?? project.title;
+
   return (
     <div className="flex flex-col gap-[10px] w-full">
       <div
         className="relative w-full overflow-hidden flex items-end pb-4 pl-4"
         style={{ height: imageHeight }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={project.img}
-          alt={project.title}
+          src={imgSrc}
+          alt={alt}
           className="absolute inset-0 size-full object-cover"
         />
         <div className="relative flex gap-3 items-center">
-          {project.tags.map((tag) => (
+          {project.tags?.map((tag) => (
             <Tag key={tag} label={tag} />
           ))}
         </div>
@@ -97,7 +99,11 @@ function CTABox() {
   );
 }
 
-export default function Work() {
+export const revalidate = 60;
+
+export default async function Work() {
+  const projects = await client.fetch<Project[]>(PROJECTS_QUERY);
+
   return (
     <section id="projects" className="bg-white py-12 md:py-20 px-4 md:px-8">
 
@@ -145,8 +151,8 @@ export default function Work() {
 
       {/* ── Mobile — single stacked column ── */}
       <div className="md:hidden flex flex-col gap-6 mt-8">
-        {PROJECTS.map((p) => (
-          <ProjectCard key={p.title} project={p} imageHeight="390px" titleSize="24px" />
+        {projects.map((p) => (
+          <ProjectCard key={p._id} project={p} imageHeight="390px" titleSize="24px" />
         ))}
         <CTABox />
       </div>
@@ -154,13 +160,21 @@ export default function Work() {
       {/* ── Desktop — staggered two-column grid ── */}
       <div className="hidden md:flex gap-6 items-end mt-[61px]">
         <div className="flex-1 flex flex-col items-start justify-between self-stretch gap-6">
-          <ProjectCard project={PROJECTS[0]} imageHeight="744px" titleSize="36px" />
-          <ProjectCard project={PROJECTS[1]} imageHeight="699px" titleSize="36px" />
+          {projects[0] && (
+            <ProjectCard project={projects[0]} imageHeight="744px" titleSize="36px" />
+          )}
+          {projects[1] && (
+            <ProjectCard project={projects[1]} imageHeight="699px" titleSize="36px" />
+          )}
           <CTABox />
         </div>
         <div className="flex-1 flex flex-col gap-[117px] pt-[240px]">
-          <ProjectCard project={PROJECTS[2]} imageHeight="699px" titleSize="36px" />
-          <ProjectCard project={PROJECTS[3]} imageHeight="744px" titleSize="36px" />
+          {projects[2] && (
+            <ProjectCard project={projects[2]} imageHeight="699px" titleSize="36px" />
+          )}
+          {projects[3] && (
+            <ProjectCard project={projects[3]} imageHeight="744px" titleSize="36px" />
+          )}
         </div>
       </div>
 
